@@ -3,7 +3,7 @@ import imgNotFound from '../assets/imgNotFound.png';
 import '../styles/Product.css';
 
 type Props = {
-  handleDelete?: (() => void) | undefined
+  handleDelete?: (() => void)
   productInfo: ProductWithId | ProductType
 };
 
@@ -11,7 +11,7 @@ export default function Product({
   handleDelete = undefined,
   productInfo,
 }: Props) {
-  const { name, description, price, image, tags, id } = productInfo as ProductWithId;
+  const { name, description, price, image, tags } = productInfo as ProductWithId;
   const tagsList = tags ? tags.split(',').map((tag) => tag.trim()) : [];
 
   return (

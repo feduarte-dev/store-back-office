@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { ProductType } from '../types';
 import Product from './Product';
 import '../styles/RegisterProduct.css';
-import { ProductType } from '../types';
 
 type Props = {
   handleSubmit: (productInfo: ProductType) => void
@@ -18,26 +18,25 @@ const initialState = {
 export default function RegisterProduct(props: Props) {
   const [productInfo, setproductInfo] = useState(initialState);
   const { name, price, description, image, tags } = productInfo;
-
   const { handleSubmit } = props;
 
-  const lintfix = (e:any) => {
-    e.target.value = '';
+  const resetValue = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    target.value = '';
+  };
+
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = target;
+
+    setproductInfo((NEWproductInfo) => ({
+      ...NEWproductInfo,
+      [id]: value,
+    }));
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleSubmit(productInfo);
     setproductInfo(initialState);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-
-    setproductInfo((NEWproductInfo) => ({
-      ...NEWproductInfo,
-      [id]: value,
-    }));
   };
 
   return (
@@ -72,7 +71,7 @@ export default function RegisterProduct(props: Props) {
               id="price"
               required
               value={ price }
-              onFocus={ lintfix }
+              onFocus={ resetValue }
               onChange={ handleChange }
             />
           </label>
@@ -82,7 +81,6 @@ export default function RegisterProduct(props: Props) {
               type="text"
               id="image"
               value={ image }
-              src={ image }
               onChange={ handleChange }
             />
           </label>

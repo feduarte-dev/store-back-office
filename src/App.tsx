@@ -2,21 +2,32 @@ import './styles/App.css';
 import { useState } from 'react';
 import ListProducts from './components/ListProducts';
 import RegisterProduct from './components/RegisterProduct';
+import { ProductType, ProductWithId } from './types';
 
 function App() {
   const [state, setState] = useState(true);
-
+  const [productList, setproductList] = useState<ProductWithId[]>([]);
   function switchRegister() {
     setState(true);
   }
   function switchList() {
     setState(false);
   }
-  const handleSubmit = (productInfo: any): void => {
+  const handleSubmit = (productInfo: ProductType): void => {
     const product = {
       id: Date.now(),
       ...productInfo,
     };
+    setproductList([
+      ...productList,
+      product,
+    ]);
+    console.log(productList);
+  };
+
+  const handleDelete = (id: number | string) => {
+    const newList = productList.filter((product) => product.id !== id);
+    setproductList(newList);
   };
 
   return (
@@ -28,7 +39,7 @@ function App() {
       {state
         && <RegisterProduct handleSubmit={ handleSubmit } />}
       {!state
-        && <ListProducts products={ [] } />}
+        && <ListProducts products={ productList } handleDelete={ handleDelete } />}
       <br />
     </div>
   );
