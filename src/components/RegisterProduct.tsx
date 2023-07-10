@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Product from './Product';
 import '../styles/RegisterProduct.css';
+import { ProductType } from '../types';
 
 type Props = {
-  handleSubmit: () => void
+  handleSubmit: (productInfo: ProductType) => void
 };
 
 const initialState = {
   name: '',
-  price: 10,
+  price: 0,
   description: '',
   image: '',
   tags: '',
@@ -20,8 +21,14 @@ export default function RegisterProduct(props: Props) {
 
   const { handleSubmit } = props;
 
+  const lintfix = (e:any) => {
+    e.target.value = '';
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleSubmit(productInfo);
+    setproductInfo(initialState);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +72,7 @@ export default function RegisterProduct(props: Props) {
               id="price"
               required
               value={ price }
+              onFocus={ lintfix }
               onChange={ handleChange }
             />
           </label>
@@ -73,6 +81,7 @@ export default function RegisterProduct(props: Props) {
             <input
               type="text"
               id="image"
+              value={ image }
               src={ image }
               onChange={ handleChange }
             />

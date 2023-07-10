@@ -12,14 +12,23 @@ function App() {
   function switchList() {
     setState(false);
   }
+  const handleSubmit = (productInfo: any): void => {
+    const product = {
+      id: Date.now(),
+      ...productInfo,
+    };
+  };
+
   return (
     <div className="app">
       <header>
         <button onClick={ switchRegister }>Cadastrar</button>
         <button onClick={ switchList }>Ver produtos</button>
       </header>
-      {state ? <RegisterProduct /> : <ListProducts products={ [] } />}
-
+      {state
+        && <RegisterProduct handleSubmit={ handleSubmit } />}
+      {!state
+        && <ListProducts products={ [] } />}
       <br />
     </div>
   );
