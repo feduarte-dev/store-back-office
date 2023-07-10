@@ -11,6 +11,7 @@ function App() {
       </header>
       <RegisterProduct />
       <ListProducts products={ [] } />
+      <br />
     </div>
   );
 }
